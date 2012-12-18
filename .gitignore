@@ -1,7 +1,0 @@
-lib_managed/
-target/
-.project
-.classpath
-.cache
-.ensime*
-*~
