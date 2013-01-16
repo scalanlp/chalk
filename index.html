@@ -44,17 +44,17 @@
 
 <h2>Introduction</h2>
 
-<p>Chalk is a library for natural language processing (NLP). The present version (1.0) is pretty much an exact copy of Apache OpenNLP v1.5.3 (opennlp.apache.org), except that "chalk" has been substituted for "opennlp" in the package names, and SBT is used to configure and build the project. Why do this? Basically, I would like to be able to change and extend OpenNLP using Scala and Akka, and I wanted to release the first version as essentially unchanged from OpenNLP. That makes the history of changes easier to track, and it might provide some useful examples for making Java-to-Scala transitions. Ultimately, I see this diverging substantatially from OpenNLP, and no attempt for compatibility will be made as of this breaking point. (I think the OpenNLP team is great and as one of the co-creators of OpenNLP, I am still very much interested in seeing OpenNLP evolve and improve. However, I really want to explore some ideas using Scala and Akka and figured this was the most straightforward and nimble way to move forward on it.)</p>
+<p>Chalk is a library for natural language processing (NLP). It is based on the <a href="http://opennlp.apache.org/">OpenNLP</a> library, but will be transitioning to more use of Scala (rather than Java) as new capabilities are added.</p>
 
-<p>I've called this Chalk because my son has a stuffed elephant that he named Chalk. "Chalk" obviously has a great connection to writing (and thus text processing). Of course, it also follows the what-your-kid-called-his-elephant naming convention precedent established with Hadoop. :)</p>
-
-<p>In addition to OpenNLP, there are two other related projects. One is Scalabha (<a href="https://github.com/utcompling/Scalabha">https://github.com/utcompling/Scalabha</a>), which I started as a package for teaching Scala in computational linguistics projects, and which I may pilfer as Chalk develops. The other is Breeze, which is a Scala-based machine learning and NLP project that I've been peripherally involved with. It's a great and very general library; ultimately, I expect to bring Breeze in as a dependency and then Chalk will in some respects be an example of building an NLP library on top of the core capabilities provided by Breeze.</p>
+<p>The name Chalk comes from my son's stuffed elephant. "Chalk" obviously has a great connection to writing (and thus text processing). Of course, it also follows the what-your-kid-called-his-elephant naming convention precedent established with Hadoop. :)</p>
 
 <h2>Using Chalk</h2>
 
+<p>The latest stable release is 1.1.0. </p>
+
 <p>In SBT:</p>
 
-<pre><code>libraryDependencies += "com.jasonbaldridge" % "chalk" % "1.0"
+<pre><code>libraryDependencies += "com.jasonbaldridge" % "chalk" % "1.1.0"
 </code></pre>
 
 <p>In Maven:</p>
@@ -62,7 +62,7 @@
 <pre><code>&lt;dependency&gt;
    &lt;groupId&gt;com.jasonbaldridge&lt;/groupId&gt;
    &lt;artifactId&gt;chalk&lt;/artifactId&gt;
-   &lt;version&gt;1.0&lt;/version&gt;
+   &lt;version&gt;1.1.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
@@ -89,7 +89,7 @@ build and use Chalk.</p>
 <h2>Building the system from source</h2>
 
 <p>Chalk uses SBT (Simple Build Tool) with a standard directory
-structure.  To build Chalk, type (in the <code>$CHALK_DIR</code> directory):</p>
+structure.  To build Chalk, type (in the <code>CHALK_DIR</code> directory):</p>
 
 <pre><code>$ ./build update compile
 </code></pre>
@@ -141,6 +141,31 @@ also just call it directly with "sbt" in <code>CHALK_DIR</code>.</p>
     Average: 1500.0 sent/s 
     Total: 3 sent
     Runtime: 0.0020s
+</code></pre>
+
+<p>Here's an example of doing sentence detection via the API by using the Scala console in SBT.</p>
+
+<pre><code>$ cd /tmp
+$ wget http://opennlp.sourceforge.net/models-1.5/en-sent.bin
+$ cd $CHALK_DIR
+$ ./build
+&gt; console
+scala&gt; import java.io.FileInputStream
+import java.io.FileInputStream
+
+scala&gt; import chalk.tools.sentdetect._
+import chalk.tools.sentdetect._
+
+scala&gt; val sdetector = new SentenceDetectorME(new SentenceModel(new FileInputStream("/tmp/en-sent.bin")))
+sdetector: chalk.tools.sentdetect.SentenceDetectorME = chalk.tools.sentdetect.SentenceDetectorME@74dd590f
+
+scala&gt; val sentences = sdetector.sentDetect("Here is a sentence. Here is another with Mr. Brown in it. Hurrah.")
+sentences: Array[java.lang.String] = Array(Here is a sentence., Here is another with Mr. Brown in it., Hurrah.)
+
+scala&gt; sentences.foreach(println)
+Here is a sentence.
+Here is another with Mr. Brown in it.
+Hurrah.
 </code></pre>
 
 <h1>Questions or suggestions?</h1>
