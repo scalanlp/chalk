@@ -7,7 +7,7 @@ Chalk is a library for natural language processing (NLP).
 
 ### What's inside
 
-The latest stable version is 1.3.0. Changes from the previous release include:
+The latest stable version is 1.3.2. Changes from the previous release include:
 
 * Initial implementation of functional pipelines for NLP applications, and actor-based pipelines based on those components.
 
@@ -18,7 +18,7 @@ See the [CHANGELOG](https://github.com/scalanlp/chalk/wiki/CHANGELOG) for change
 
 In SBT:
 
-    libraryDependencies += "org.scalanlp" % "chalk" % "1.3.0"
+    libraryDependencies += "org.scalanlp" %% "chalk" % "1.3.0"
 
 In Maven:
 
