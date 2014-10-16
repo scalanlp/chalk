@@ -4,12 +4,11 @@ version := "1.3.3-SNAPSHOT"
 
 organization := "org.scalanlp"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.10.4"
 
-crossScalaVersions  := Seq("2.11.0", "2.10.3")
+crossScalaVersions  := Seq("2.11.2", "2.10.4")
 
-
-retrieveManaged := true
+scalacOptions := Seq("-feature", "-deprecation")
 
 resolvers ++= Seq(
   "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
@@ -17,14 +16,20 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.scalanlp" %% "nak" % "1.2.1",
-  "org.scalanlp" %% "breeze" % "0.8.1",
-  "org.scalanlp" %% "breeze-config" % "0.8",
-  "com.typesafe.akka" %% "akka-actor" % "2.2.3",
-  "com.typesafe.akka" %% "akka-agent" % "2.2.3",
-  "org.scalacheck" %% "scalacheck" % "1.10.0" % "test",
-  "org.scalatest" %% "scalatest" % "2.0.M5b" % "test"
+  "org.scalanlp" %% "nak" % "1.3",
+  "com.typesafe.akka" %% "akka-actor" % "2.3.6" % "provided",
+  "com.typesafe.akka" %% "akka-agent" % "2.3.6" % "provided",
+  "org.scalacheck" %% "scalacheck" % "1.11.6" % "test",
+  "org.scalatest" %% "scalatest" % "2.2.2" % "test"
 )
+
+libraryDependencies <++= (scalaBinaryVersion).apply{ sv => sv match{
+  case "2.11" => Seq(
+    "org.scala-lang.modules" %% "scala-xml" % "1.0.2",
+    "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2"
+  )
+  case _ => Nil
+}}
 
 publishTo <<= version { v: String =>
   val nexus = "https://oss.sonatype.org/"
