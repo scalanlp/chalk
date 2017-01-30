@@ -1,5 +1,7 @@
 # Chalk
 
+NOTE: This project is currently dormant with no current prospect for further development. Suggestion: check out OpenNLP or StanfordNLP for the JVM or spaCy for Python. (If anyone would like to do something like spaCy for Scala, that would be *fantastic*.)
+
 ## Introduction
 
 Chalk is a library for natural language processing (NLP).
